@@ -21,7 +21,7 @@ namespace ConsoleApp1
             long min = 00000000000L;
             long max = 99999999999;
 
-            accountNum = rand.NextInt64(min, max);
+            accountNum = rand.NextInt64(min, max); 
             // = "";
             //for (int i = 0; i < 11; i++)
             //{
@@ -30,14 +30,14 @@ namespace ConsoleApp1
             return accountNum;
         }
 
-        long test = an();
+       // long test = an();
 
-        public AccountHolder(string Fn, int age, string dob, long test)
+        public AccountHolder(string Fn, int age, string dob)
         {
             FullName = Fn;
             Age = age;
             Date_Of_Birth = dob;
-            Account_Number = test;
+            Account_Number = an();
             Balance = 0;
         }
 
@@ -46,8 +46,14 @@ namespace ConsoleApp1
 
        
 
-        public abstract void deposite(double amount);
-        public abstract void withdraw(double amount);
+        public abstract void Deposit(double amount);
+        public abstract void Withdraw(double amount);
+
         //public abstract string GetaccountNum(string accountNum);
+
+        public double getBalance()
+        {
+            return Balance;
+        }
     }
 }

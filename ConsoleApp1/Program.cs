@@ -1,11 +1,18 @@
 ﻿using ConsoleApp1;
+using System.Net.Http.Headers;
 using System.Reflection.Metadata;
 
 class Bank
 {
     static void Main(string[] args)
     {
+        dictionary Dictionary = new dictionary();
         Console.WriteLine("Welcome to Trail Bank ");
+
+        string fullName = "";
+        int age = 0;
+        string dob = "";
+       // BankAccount account = null;
 
         while (true)
         {
@@ -13,8 +20,28 @@ class Bank
             string input = Console.ReadLine().ToLower();
             if (input == "yes")
             {
+                Console.Write("Enter Full Name: ");
+                string FullName = Console.ReadLine();
+
+                if (Dictionary.HasAccount(FullName))
+                {
+                    Console.WriteLine("You already have an account.");
+                    var existingAccount = Dictionary.GetAccount(FullName);
+                    Console.WriteLine($"Your balance is: {existingAccount.Balance}");
+                }
+                else
+                {
+                    Console.Write("Enter Age: ");
+                    age = int.Parse(Console.ReadLine());
+
+                    Console.Write("Enter Date of Birth (yyyy-mm-dd): ");
+                    dob =Console.ReadLine();
+
+                    Dictionary.CreateAccount(FullName, age, dob);
+                }
                 break;
             }
+
             else if (input == "no")
             {
                 Console.WriteLine("No worries! Come back anytime.");
@@ -22,21 +49,15 @@ class Bank
             }
             else Console.WriteLine("Invalid input. Please type 'yes' or 'no'.");
         }
-
-        Console.Write("Enter your full name: ");
-        string name = Console.ReadLine();
-
-        Console.Write("Enter your age: ");
-        int age = int.Parse(Console.ReadLine());
-
-        Console.Write("Enter your date of birth (YYYY-MM-DD): ");
-        string dob = Console.ReadLine();
-
-        long an = 0L;
-
-        BankAccount account = new BankAccount( name , age, dob, an);
-        Console.WriteLine($"Account Created For {account.FullName}");
         Console.WriteLine($"Account Number {account.Account_Number}");
         Console.WriteLine($"Account Balance {account.Balance}");
+
+        Console.Write("Enter amount to deposit: ₦");
+        double depositAmount = double.Parse(Console.ReadLine());
+        account.Deposit(depositAmount);
+
+        Console.Write("Enter amount to withdraw: ₦");
+        double withdrawAmount = double.Parse(Console.ReadLine());
+        account.Withdraw(withdrawAmount);
     }
 }

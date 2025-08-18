@@ -8,9 +8,9 @@ namespace ConsoleApp1
 {
     public class BankAccount :AccountHolder
     {
-        public BankAccount(string fullName, int age, string dob,long an) : base(fullName, age, dob,an) { }
+        public BankAccount(string fullName, int age, string dob) : base(fullName, age, dob) { }
 
-        public override void deposite(double amount)
+        public override void Deposit(double amount)
         {
             if (amount > 0)
             {
@@ -22,13 +22,14 @@ namespace ConsoleApp1
                 Console.WriteLine("Invalid deposit amount.");
             }
         }
+        
 
         //public override string getaccountnum(string accountnum)
         //{
         //    return accountnum;
         //}
 
-        public override void withdraw(double amount)
+        public override void Withdraw(double amount)
         {
             if (amount > 0 && amount <= Balance)
             {
