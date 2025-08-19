@@ -8,11 +8,11 @@ namespace ConsoleApp1
 {
     public class BankAccount :AccountHolder
     {
-        public BankAccount(string fullName, int age, string dob) : base(fullName, age, dob) { }
+        public BankAccount(string fullName, int age, string dob,string an) : base(fullName, age, dob,an) { }
 
-        public override void Deposit(double amount)
+        public override void deposite(decimal amount) //now decimal
         {
-            if (amount > 0)
+            if (amount > 0m)  //decimal
             {
                 Balance += amount;
                 Console.WriteLine($"Deposit successful. New balance: #{Balance}");
@@ -29,16 +29,21 @@ namespace ConsoleApp1
         //    return accountnum;
         //}
 
-        public override void Withdraw(double amount)
+        public override void withdraw(decimal amount)  //separate logic of insufficuent funds and invalid input
         {
-            if (amount > 0 && amount <= Balance)
+            if (amount <= 0m)//decimal
             {
-                Balance -= amount;
-                Console.WriteLine($"Withdrawal successful. New balance: #{Balance}");
+                Console.WriteLine("Invalid withdrawal amount. Please enter a positive number.");
+                return;
+            }
+            else if (amount > Balance)
+            {
+                Console.WriteLine("Insufficient funds for this withdrawal.");
             }
             else
             {
-                Console.WriteLine("Insufficient funds or invalid amount.");
+                Balance -= amount;
+                Console.WriteLine($"Withdrawal successful. New balance: #{Balance}");
             }
         }
     }

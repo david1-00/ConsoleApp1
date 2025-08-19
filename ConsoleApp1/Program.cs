@@ -18,7 +18,7 @@ class Bank
         {
             Console.Write("Would you like to sign up? (yes/no): ");
             string input = Console.ReadLine().ToLower();
-            if (input == "yes")
+            if (input == "yes") 
             {
                 Console.Write("Enter Full Name: ");
                 string FullName = Console.ReadLine();
@@ -49,15 +49,28 @@ class Bank
             }
             else Console.WriteLine("Invalid input. Please type 'yes' or 'no'.");
         }
-        Console.WriteLine($"Account Number {account.Account_Number}");
-        Console.WriteLine($"Account Balance {account.Balance}");
+        while (true)
+        {
+            Console.WriteLine(" CHOOSE YOUR  POISON");
+            Console.WriteLine( "1. Deposit");
+            // finish the rest yourself
+            // you  must be able to deposit, withdraw, show balance, show account info (name, age, dob, account number, balance)
+            Console.WriteLine(  "Enter 1 to 5");
 
-        Console.Write("Enter amount to deposit: ₦");
-        double depositAmount = double.Parse(Console.ReadLine());
-        account.Deposit(depositAmount);
+            var option =  Console.ReadLine().ToLower();
 
-        Console.Write("Enter amount to withdraw: ₦");
-        double withdrawAmount = double.Parse(Console.ReadLine());
-        account.Withdraw(withdrawAmount);
+            switch (option)
+            {
+                case "1":
+                    Console.WriteLine("Enter amount to deposit: ");
+                    var depamount = Console.ReadLine();  //make sure to validate the amount, must be valid and greater than zero
+                    break;
+                default:
+                    Console.WriteLine("AFa, na wah oh");
+                    break;
+            }
+
+        }
     }
 }
+

@@ -11,10 +11,10 @@ namespace ConsoleApp1
         public string FullName { get; set; }
         public int Age { get; set; }
         public string Date_Of_Birth { get; set; }
-        public long Account_Number {get; set;}
-        public double Balance { get; protected set; } = 0;
+        public string Account_Number {get; set;}  // now string
+        public decimal Balance { get; protected set; } = 0m; //to decimal
 
-        public static long an()
+        public static string an()  // turned account numver to string
         {
             Random rand = new Random();
             long accountNum;
@@ -27,18 +27,18 @@ namespace ConsoleApp1
             //{
             //    accountNum += rand.Next(0, 10);//.ToString();
             //}
-            return accountNum;
+            return accountNum.ToString();
         }
 
-       // long test = an();
+ 
 
-        public AccountHolder(string Fn, int age, string dob)
+        public AccountHolder(string Fn, int age, string dob, string test)
         {
             FullName = Fn;
             Age = age;
             Date_Of_Birth = dob;
-            Account_Number = an();
-            Balance = 0;
+            Account_Number = test;
+            //Balance = 0;  // i removed balance here, 
         }
 
 
@@ -49,6 +49,8 @@ namespace ConsoleApp1
         public abstract void Deposit(double amount);
         public abstract void Withdraw(double amount);
 
+        public abstract void deposite(decimal amount); // i turned these to decimal
+        public abstract void withdraw(decimal amount); // i turned these to decimal
         //public abstract string GetaccountNum(string accountNum);
 
         public double getBalance()
