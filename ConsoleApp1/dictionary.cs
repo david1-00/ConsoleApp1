@@ -42,7 +42,8 @@ namespace ConsoleApp1
                 string an = AccountHolder.an();
                 account = new BankAccount(fullName, age, dob, an);
                 accounts.Add(fullName, account);
-                Console.WriteLine($"Account created for {fullName}. Account Number: {account.Account_Number}");
+                Console.WriteLine($"Account created for {fullName}");
+                Console.WriteLine($"Account Number: {account.Account_Number}");
             }
             return account;
         }

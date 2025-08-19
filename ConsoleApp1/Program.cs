@@ -27,6 +27,7 @@ class Bank
             }
             else if (input == "yes")
             {
+                Console.WriteLine("===============================================");
                 Console.Write("Enter Full Name: ");
                 string FullName = Console.ReadLine();
 
@@ -44,6 +45,7 @@ class Bank
                     Console.Write("Enter Date of Birth (yyyy-mm-dd): ");
                     dob = Console.ReadLine();
 
+                    Console.WriteLine("===============================================");
                     var accountinfo = Dictionary.CreateAccount(FullName, age, dob);
 
                     //Console.WriteLine($"Account Created For {accountinfo.FullName}");
@@ -59,7 +61,7 @@ class Bank
                     Console.WriteLine("3. Show Balance");
                     Console.WriteLine("4. Show Account Info");
                     Console.WriteLine("5. Exit the Menu")
-                  ;
+                    ;
 
                     while (true)
                     {
