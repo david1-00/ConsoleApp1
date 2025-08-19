@@ -8,9 +8,10 @@ namespace ConsoleApp1
 {
     public class BankAccount :AccountHolder
     {
-        public BankAccount(string fullName, int age, string dob,string an) : base(fullName, age, dob,an) { }
+        public BankAccount(string fullName, int age, string dob,string an) : base(fullName, age, dob,an) { 
+        }
 
-        public override void deposite(decimal amount) //now decimal
+        public override void deposit(decimal amount) //now decimal
         {
             if (amount > 0m)  //decimal
             {
@@ -22,14 +23,14 @@ namespace ConsoleApp1
                 Console.WriteLine("Invalid deposit amount.");
             }
         }
-        
+
 
         //public override string getaccountnum(string accountnum)
         //{
         //    return accountnum;
         //}
 
-        public override void withdraw(decimal amount)  //separate logic of insufficuent funds and invalid input
+        public override void Withdraw(decimal amount)  //separate logic of insufficuent funds and invalid input
         {
             if (amount <= 0m)//decimal
             {

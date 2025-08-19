@@ -42,20 +42,15 @@ namespace ConsoleApp1
         }
 
 
-       
 
-       
 
-        public abstract void Deposit(double amount);
-        public abstract void Withdraw(double amount);
+        public abstract void deposit(decimal amount); // i turned these to decimal
+        public abstract void Withdraw(decimal amount); // i turned these to decimal
+        ////public abstract string GetaccountNum(string accountNum);
 
-        public abstract void deposite(decimal amount); // i turned these to decimal
-        public abstract void withdraw(decimal amount); // i turned these to decimal
-        //public abstract string GetaccountNum(string accountNum);
-
-        public double getBalance()
-        {
-            return Balance;
-        }
+        //public double getBalance()
+        //{
+        //    return Balance;
+        //}
     }
 }

@@ -23,7 +23,13 @@ namespace ConsoleApp1
             return account;
         }
 
-        public long CreateAccount(string fullName, int age, string dob)
+        public BankAccount GetAccount2(string acctno)
+        {
+            accounts.TryGetValue(acctno, out BankAccount account);
+            return account;
+        }
+
+        public BankAccount CreateAccount(string fullName, int age, string dob)
         {
             BankAccount account;
             if (HasAccount(fullName))
@@ -33,12 +39,60 @@ namespace ConsoleApp1
             }
             else
             {
-                account = new BankAccount(fullName, age, dob);
-                accounts.Add(fullName.ToLower(), account);
+                string an = AccountHolder.an();
+                account = new BankAccount(fullName, age, dob, an);
+                accounts.Add(fullName, account);
                 Console.WriteLine($"Account created for {fullName}. Account Number: {account.Account_Number}");
             }
-
-            return account.Account_Number;
+            return account;
         }
+
+        public decimal Deposit(decimal amount, string fullname) 
+        {
+            BankAccount account = GetAccount(fullname.ToLower());
+
+            if (account == null)
+            {
+                Console.WriteLine("Account not found.");
+                return account.Balance;
+            }
+            if (amount > 0m)
+            {
+                account.deposit(amount); 
+                Console.WriteLine($"Deposit successful. New balance: ₦{account.Balance}");
+                return account.Balance; 
+            }
+            else
+            {
+                Console.WriteLine("Invalid deposit amount.");
+                return account.Balance;
+            }
+        }
+
+
+        public decimal Withdraw(decimal amount, string fullname) 
+        {
+
+            BankAccount account = GetAccount(fullname.ToLower());
+
+            if (amount <= 0m)//decimal
+            {
+                Console.WriteLine("Invalid withdrawal amount. Please enter a positive number.");
+                return account.Balance;
+            }
+            else if (amount > account.Balance)
+            {
+                Console.WriteLine("Insufficient funds for this withdrawal.");
+                return account.Balance;
+            }
+            else
+            {
+                account.Withdraw(amount);
+                Console.WriteLine($"Withdrawal successful. New balance: {account.Balance}");
+                return account.Balance;
+            }
+        }
+
+
     }
 }
