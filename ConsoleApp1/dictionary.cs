@@ -12,15 +12,19 @@ namespace ConsoleApp1
     public class dictionary
     {
         private Dictionary<string, BankAccount> accounts = new Dictionary<string, BankAccount>();
-        public bool HasAccount(string fullname) 
+
+        private Dictionary<string, List<string>> byName = new Dictionary<string, List<string>>();
+        public bool HasAccount(string fullName)
         {
-            return accounts.ContainsKey(fullname);
+            return byName.ContainsKey(fullName);
         }
 
-        public BankAccount GetAccount(string fullname)
+
+        public BankAccount GetAccount(string fullName)
         {
-            accounts.TryGetValue(fullname, out BankAccount account);
-            return account;
+            var list = GetAccountNumbersByName(fullName);
+            if (list.Count == 0) return null;
+            return GetByAccountNumber(list[0]);
         }
 
         public BankAccount GetAccount2(string acctno)
@@ -29,22 +33,36 @@ namespace ConsoleApp1
             return account;
         }
 
+        public List<string> GetAccountNumbersByName(string fullName)
+        {
+            return byName.TryGetValue(fullName, out var list) ? list : new List<string>();
+        }
+
+
+        public BankAccount GetByAccountNumber(string acctNo)
+        {
+            accounts.TryGetValue(acctNo, out var acct);
+            return acct;
+        }
+
         public BankAccount CreateAccount(string fullName, int age, string dob)
         {
-            BankAccount account;
-            if (HasAccount(fullName))
+            string an = AccountHolder.an(); // keep generator
+            var account = new BankAccount(fullName, age, dob, an);
+
+            // index by account number
+            accounts[an] = account;
+
+            // index by name
+            if (!byName.TryGetValue(fullName, out var list))
             {
-                Console.WriteLine("Account already exists.");
-                account = accounts[fullName];
+                list = new List<string>();
+                byName[fullName] = list;
             }
-            else
-            {
-                string an = AccountHolder.an();
-                account = new BankAccount(fullName, age, dob, an);
-                accounts.Add(fullName, account);
-                Console.WriteLine($"Account created for {fullName}");
-                Console.WriteLine($"Account Number: {account.Account_Number}");
-            }
+            list.Add(an);
+
+            Console.WriteLine($"Account created for {fullName}");
+            Console.WriteLine($"Account Number: {account.Account_Number}");
             return account;
         }
 
@@ -94,6 +112,51 @@ namespace ConsoleApp1
             }
         }
 
+        // I ADDED THESE TWO, THERE ARE NOT SO DIFFERENT FROM THE PREVIOUS ONE
 
+        public decimal DepositByAccountNumber(decimal amount, string acctNo)
+        {
+            var account = GetByAccountNumber(acctNo);
+            if (account == null)
+            {
+                Console.WriteLine("Account not found.");
+                return 0m;
+            }
+
+            if (amount <= 0m)
+            {
+                Console.WriteLine("Invalid deposit amount.");
+                return account.Balance;
+            }
+
+            account.deposit(amount); 
+            Console.WriteLine($"Deposit successful. New balance: ₦{account.Balance}");
+            return account.Balance;
+        }
+
+        public decimal WithdrawByAccountNumber(decimal amount, string acctNo)
+        {
+            var account = GetByAccountNumber(acctNo);
+            if (account == null)
+            {
+                Console.WriteLine("Account not found.");
+                return 0m;
+            }
+
+            if (amount <= 0m)
+            {
+                Console.WriteLine("Invalid withdrawal amount. Please enter a positive number.");
+                return account.Balance;
+            }
+            else if (amount > account.Balance)
+            {
+                Console.WriteLine("Insufficient funds for this withdrawal.");
+                return account.Balance;
+            }
+
+            account.Withdraw(amount);
+            Console.WriteLine($"Withdrawal successful. New balance: {account.Balance}");
+            return account.Balance;
+        }
     }
 }
